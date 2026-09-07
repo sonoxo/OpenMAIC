@@ -1,0 +1,95 @@
+{
+  "version": "1.0",
+  "ontology": "openmaic",
+  "description": "Implementation map for materializing OpenMAIC application state into ontology objects. Source hints are discovery guidance and are intentionally decoupled from exact file paths.",
+  "mappings": [
+    {
+      "source": "course-domain",
+      "sourceHints": ["course lifecycle", "course persistence", "course APIs"],
+      "objectType": "Course",
+      "identity": "durable course identifier",
+      "trigger": "course create/update",
+      "notes": "Materialize one Course object per durable course record."
+    },
+    {
+      "source": "learning-assets",
+      "sourceHints": ["course content", "generated artifacts", "lesson/slide/document state"],
+      "objectType": "LearningAsset",
+      "identity": "durable asset identifier plus version",
+      "trigger": "asset create/revise",
+      "notes": "Preserve version and content provenance rather than overwriting historical identity."
+    },
+    {
+      "source": "agent-runtime",
+      "sourceHints": ["durable agent sessions", "agent orchestration", "run checkpoints"],
+      "objectType": "AgentRun",
+      "identity": "run or durable session identifier",
+      "trigger": "run start/checkpoint/complete/fail/cancel/resume",
+      "notes": "Emit state transitions at the runtime boundary instead of reconstructing them from UI state."
+    },
+    {
+      "source": "agent-registry",
+      "sourceHints": ["agent definitions", "agent roles"],
+      "objectType": "Agent",
+      "identity": "stable agent definition identifier",
+      "trigger": "agent definition create/update",
+      "notes": "Separate a reusable Agent definition from an individual AgentRun."
+    },
+    {
+      "source": "skill-registry",
+      "sourceHints": ["skills", "skill definitions", "tool grants"],
+      "objectType": "Skill",
+      "identity": "skill identifier and semantic version",
+      "trigger": "skill register/update",
+      "notes": "Use links to express which agents may use which skills and which tools back each skill."
+    },
+    {
+      "source": "tool-registry",
+      "sourceHints": ["tools", "internal services", "agent tool adapters"],
+      "objectType": "Tool",
+      "identity": "stable tool identifier",
+      "trigger": "tool register/update",
+      "notes": "Do not store secrets in ontology properties; keep endpointRef as a logical reference."
+    },
+    {
+      "source": "provider-layer",
+      "sourceHints": ["model providers", "provider configuration", "model routing"],
+      "objectType": "Provider",
+      "identity": "provider identifier",
+      "trigger": "provider configuration change",
+      "notes": "Provider objects describe routing/configuration metadata, never provider credentials."
+    },
+    {
+      "source": "session-materials",
+      "sourceHints": ["uploads", "linked materials", "storage"],
+      "objectType": "SessionMaterial",
+      "identity": "material identifier or content-addressed hash",
+      "trigger": "material attach/remove",
+      "notes": "Store provenance and logical source references while keeping binary payloads in the storage layer."
+    },
+    {
+      "source": "rendering-export",
+      "sourceHints": ["rendering", "exports", "download generation"],
+      "objectType": "RenderJob",
+      "identity": "render job identifier",
+      "trigger": "render queued/started/completed/failed",
+      "notes": "Represent export generation as an auditable job linked to the asset rendered."
+    },
+    {
+      "source": "evaluation",
+      "sourceHints": ["evaluation", "quality checks", "scoring"],
+      "objectType": "Evaluation",
+      "identity": "evaluation identifier",
+      "trigger": "evaluation created/completed",
+      "notes": "Link evaluations to the AgentRun whose output or behavior they measure."
+    },
+    {
+      "source": "governance",
+      "sourceHints": ["authorization", "policy checks", "guard decisions"],
+      "objectType": "PolicyDecision",
+      "identity": "policy decision identifier",
+      "trigger": "governed action authorization",
+      "notes": "Persist allow/deny/constrain outcomes for high-value actions so decisions remain auditable."
+    }
+  ]
+}
