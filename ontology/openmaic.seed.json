@@ -1,0 +1,68 @@
+{
+  "ontology": "openmaic",
+  "mode": "example",
+  "description": "Non-production example entities used to validate ontology identity and relationships during development.",
+  "entities": [
+    {
+      "objectType": "Course",
+      "id": "course-example-001",
+      "properties": {
+        "courseId": "course-example-001",
+        "title": "Example AI-Native Course",
+        "status": "draft",
+        "locale": "en-US",
+        "createdAt": "2026-09-07T00:00:00Z",
+        "updatedAt": "2026-09-07T00:00:00Z"
+      }
+    },
+    {
+      "objectType": "Agent",
+      "id": "course-orchestrator",
+      "properties": {
+        "agentId": "course-orchestrator",
+        "name": "Course Orchestrator",
+        "role": "orchestrator",
+        "status": "active",
+        "modelPolicyRef": "policy/default-course-authoring"
+      }
+    },
+    {
+      "objectType": "Skill",
+      "id": "course-authoring",
+      "properties": {
+        "skillId": "course-authoring",
+        "name": "Course Authoring",
+        "version": "1.0.0",
+        "status": "active",
+        "inputSchemaRef": "schema/course-authoring/input",
+        "outputSchemaRef": "schema/course-authoring/output"
+      }
+    },
+    {
+      "objectType": "Tool",
+      "id": "render-service",
+      "properties": {
+        "toolId": "render-service",
+        "name": "Render Service",
+        "kind": "internal-service",
+        "status": "active",
+        "endpointRef": "service/render"
+      }
+    },
+    {
+      "objectType": "Provider",
+      "id": "provider-example",
+      "properties": {
+        "providerId": "provider-example",
+        "name": "Configured Model Provider",
+        "kind": "llm",
+        "status": "active",
+        "modelCatalogRef": "config/providers"
+      }
+    }
+  ],
+  "links": [
+    { "linkType": "agentUsesSkill", "from": "course-orchestrator", "to": "course-authoring" },
+    { "linkType": "skillUsesTool", "from": "course-authoring", "to": "render-service" }
+  ]
+}
