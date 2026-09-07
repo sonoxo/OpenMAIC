@@ -1,0 +1,263 @@
+{
+  "$schemaVersion": "1.0",
+  "id": "openmaic",
+  "displayName": "OpenMAIC Ontology",
+  "description": "Repository-local semantic contract for OpenMAIC, modeled after Palantir-style object, link, and governed action semantics.",
+  "objectTypes": [
+    {
+      "id": "Course",
+      "primaryKey": "courseId",
+      "titleProperty": "title",
+      "properties": [
+        { "id": "courseId", "type": "string", "required": true },
+        { "id": "title", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "locale", "type": "string", "required": false },
+        { "id": "createdAt", "type": "datetime", "required": true },
+        { "id": "updatedAt", "type": "datetime", "required": true }
+      ],
+      "governance": { "classification": "internal", "owner": "course-platform" }
+    },
+    {
+      "id": "LearningAsset",
+      "primaryKey": "assetId",
+      "titleProperty": "title",
+      "properties": [
+        { "id": "assetId", "type": "string", "required": true },
+        { "id": "courseId", "type": "string", "required": true },
+        { "id": "kind", "type": "string", "required": true },
+        { "id": "title", "type": "string", "required": true },
+        { "id": "version", "type": "integer", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "contentRef", "type": "string", "required": false },
+        { "id": "createdAt", "type": "datetime", "required": true },
+        { "id": "updatedAt", "type": "datetime", "required": true }
+      ],
+      "governance": { "classification": "internal", "owner": "course-platform" }
+    },
+    {
+      "id": "Agent",
+      "primaryKey": "agentId",
+      "titleProperty": "name",
+      "properties": [
+        { "id": "agentId", "type": "string", "required": true },
+        { "id": "name", "type": "string", "required": true },
+        { "id": "role", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "modelPolicyRef", "type": "string", "required": false }
+      ],
+      "governance": { "classification": "internal", "owner": "agent-runtime" }
+    },
+    {
+      "id": "AgentRun",
+      "primaryKey": "runId",
+      "titleProperty": "runId",
+      "properties": [
+        { "id": "runId", "type": "string", "required": true },
+        { "id": "courseId", "type": "string", "required": true },
+        { "id": "agentId", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "startedAt", "type": "datetime", "required": true },
+        { "id": "endedAt", "type": "datetime", "required": false },
+        { "id": "checkpointRef", "type": "string", "required": false },
+        { "id": "errorCode", "type": "string", "required": false }
+      ],
+      "governance": { "classification": "internal", "owner": "agent-runtime" }
+    },
+    {
+      "id": "Skill",
+      "primaryKey": "skillId",
+      "titleProperty": "name",
+      "properties": [
+        { "id": "skillId", "type": "string", "required": true },
+        { "id": "name", "type": "string", "required": true },
+        { "id": "version", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "inputSchemaRef", "type": "string", "required": false },
+        { "id": "outputSchemaRef", "type": "string", "required": false }
+      ],
+      "governance": { "classification": "internal", "owner": "agent-runtime" }
+    },
+    {
+      "id": "Tool",
+      "primaryKey": "toolId",
+      "titleProperty": "name",
+      "properties": [
+        { "id": "toolId", "type": "string", "required": true },
+        { "id": "name", "type": "string", "required": true },
+        { "id": "kind", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "endpointRef", "type": "string", "required": false }
+      ],
+      "governance": { "classification": "internal", "owner": "agent-runtime" }
+    },
+    {
+      "id": "Provider",
+      "primaryKey": "providerId",
+      "titleProperty": "name",
+      "properties": [
+        { "id": "providerId", "type": "string", "required": true },
+        { "id": "name", "type": "string", "required": true },
+        { "id": "kind", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "modelCatalogRef", "type": "string", "required": false }
+      ],
+      "governance": { "classification": "internal", "owner": "provider-layer" }
+    },
+    {
+      "id": "SessionMaterial",
+      "primaryKey": "materialId",
+      "titleProperty": "name",
+      "properties": [
+        { "id": "materialId", "type": "string", "required": true },
+        { "id": "courseId", "type": "string", "required": true },
+        { "id": "name", "type": "string", "required": true },
+        { "id": "mimeType", "type": "string", "required": true },
+        { "id": "sourceRef", "type": "string", "required": true },
+        { "id": "contentHash", "type": "string", "required": false },
+        { "id": "createdAt", "type": "datetime", "required": true }
+      ],
+      "governance": { "classification": "internal", "owner": "storage-layer" }
+    },
+    {
+      "id": "RenderJob",
+      "primaryKey": "renderJobId",
+      "titleProperty": "renderJobId",
+      "properties": [
+        { "id": "renderJobId", "type": "string", "required": true },
+        { "id": "assetId", "type": "string", "required": true },
+        { "id": "format", "type": "string", "required": true },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "outputRef", "type": "string", "required": false },
+        { "id": "startedAt", "type": "datetime", "required": true },
+        { "id": "endedAt", "type": "datetime", "required": false }
+      ],
+      "governance": { "classification": "internal", "owner": "rendering" }
+    },
+    {
+      "id": "Evaluation",
+      "primaryKey": "evaluationId",
+      "titleProperty": "evaluationId",
+      "properties": [
+        { "id": "evaluationId", "type": "string", "required": true },
+        { "id": "runId", "type": "string", "required": true },
+        { "id": "kind", "type": "string", "required": true },
+        { "id": "score", "type": "number", "required": false },
+        { "id": "status", "type": "string", "required": true },
+        { "id": "reportRef", "type": "string", "required": false },
+        { "id": "createdAt", "type": "datetime", "required": true }
+      ],
+      "governance": { "classification": "internal", "owner": "evaluation" }
+    },
+    {
+      "id": "PolicyDecision",
+      "primaryKey": "decisionId",
+      "titleProperty": "decisionId",
+      "properties": [
+        { "id": "decisionId", "type": "string", "required": true },
+        { "id": "runId", "type": "string", "required": true },
+        { "id": "policyId", "type": "string", "required": true },
+        { "id": "outcome", "type": "string", "required": true },
+        { "id": "reason", "type": "string", "required": false },
+        { "id": "createdAt", "type": "datetime", "required": true }
+      ],
+      "governance": { "classification": "restricted", "owner": "governance" }
+    }
+  ],
+  "linkTypes": [
+    { "id": "courseContainsAsset", "from": "Course", "to": "LearningAsset", "cardinality": "one-to-many", "description": "A course contains generated or authored learning assets." },
+    { "id": "courseHasMaterial", "from": "Course", "to": "SessionMaterial", "cardinality": "one-to-many", "description": "A course uses uploaded or linked session material." },
+    { "id": "agentRunForCourse", "from": "AgentRun", "to": "Course", "cardinality": "many-to-one", "description": "An agent run operates in a course context." },
+    { "id": "agentRunUsesAgent", "from": "AgentRun", "to": "Agent", "cardinality": "many-to-one", "description": "An agent run is executed by an agent definition." },
+    { "id": "agentUsesSkill", "from": "Agent", "to": "Skill", "cardinality": "many-to-many", "description": "Agents may be granted reusable skills." },
+    { "id": "skillUsesTool", "from": "Skill", "to": "Tool", "cardinality": "many-to-many", "description": "Skills may invoke one or more tools." },
+    { "id": "agentRunUsesProvider", "from": "AgentRun", "to": "Provider", "cardinality": "many-to-one", "description": "A run resolves model execution through a provider." },
+    { "id": "agentRunConsumesMaterial", "from": "AgentRun", "to": "SessionMaterial", "cardinality": "many-to-many", "description": "A run may consume course/session materials." },
+    { "id": "renderJobRendersAsset", "from": "RenderJob", "to": "LearningAsset", "cardinality": "many-to-one", "description": "A render job produces a deliverable representation of an asset." },
+    { "id": "evaluationEvaluatesRun", "from": "Evaluation", "to": "AgentRun", "cardinality": "many-to-one", "description": "Evaluations measure an agent run or generated result." },
+    { "id": "policyDecisionGovernsRun", "from": "PolicyDecision", "to": "AgentRun", "cardinality": "many-to-one", "description": "Governance decisions are attached to the run they authorize, constrain, or deny." }
+  ],
+  "actionTypes": [
+    {
+      "id": "CreateCoursePlan",
+      "description": "Create or initialize a governed course planning run.",
+      "inputs": [
+        { "name": "course", "objectType": "Course" },
+        { "name": "agent", "objectType": "Agent" }
+      ],
+      "outputs": [{ "name": "run", "objectType": "AgentRun" }],
+      "writes": ["AgentRun"],
+      "permission": "course:write",
+      "audit": true
+    },
+    {
+      "id": "GenerateLearningAsset",
+      "description": "Generate a course asset through a governed agent run.",
+      "inputs": [
+        { "name": "course", "objectType": "Course" },
+        { "name": "run", "objectType": "AgentRun" }
+      ],
+      "outputs": [{ "name": "asset", "objectType": "LearningAsset" }],
+      "writes": ["LearningAsset", "AgentRun"],
+      "permission": "course:write",
+      "audit": true
+    },
+    {
+      "id": "ReviseLearningAsset",
+      "description": "Create a new governed version of an existing learning asset.",
+      "inputs": [{ "name": "asset", "objectType": "LearningAsset" }],
+      "outputs": [{ "name": "revisedAsset", "objectType": "LearningAsset" }],
+      "writes": ["LearningAsset"],
+      "permission": "course:write",
+      "audit": true
+    },
+    {
+      "id": "AttachMaterial",
+      "description": "Attach source material to a course while preserving provenance metadata.",
+      "inputs": [{ "name": "course", "objectType": "Course" }],
+      "outputs": [{ "name": "material", "objectType": "SessionMaterial" }],
+      "writes": ["SessionMaterial"],
+      "permission": "course:write",
+      "audit": true
+    },
+    {
+      "id": "InvokeSkill",
+      "description": "Authorize a run to invoke a registered skill and its allowed tools.",
+      "inputs": [
+        { "name": "run", "objectType": "AgentRun" },
+        { "name": "skill", "objectType": "Skill" }
+      ],
+      "outputs": [{ "name": "run", "objectType": "AgentRun" }],
+      "writes": ["AgentRun", "PolicyDecision"],
+      "permission": "agent:execute",
+      "audit": true
+    },
+    {
+      "id": "ExportCourse",
+      "description": "Render a learning asset into an export format through a tracked render job.",
+      "inputs": [{ "name": "asset", "objectType": "LearningAsset" }],
+      "outputs": [{ "name": "renderJob", "objectType": "RenderJob" }],
+      "writes": ["RenderJob"],
+      "permission": "course:export",
+      "audit": true
+    },
+    {
+      "id": "CancelRun",
+      "description": "Cancel an active agent run with a recorded state transition.",
+      "inputs": [{ "name": "run", "objectType": "AgentRun" }],
+      "outputs": [{ "name": "run", "objectType": "AgentRun" }],
+      "writes": ["AgentRun"],
+      "permission": "agent:control",
+      "audit": true
+    },
+    {
+      "id": "ResumeRun",
+      "description": "Resume a durable agent run from its checkpoint subject to policy evaluation.",
+      "inputs": [{ "name": "run", "objectType": "AgentRun" }],
+      "outputs": [{ "name": "run", "objectType": "AgentRun" }],
+      "writes": ["AgentRun", "PolicyDecision"],
+      "permission": "agent:control",
+      "audit": true
+    }
+  ]
+}
